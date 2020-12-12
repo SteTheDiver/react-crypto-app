@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
-import Coin from "./components/Coin";
+import Coin from "./components/Coin/Coin";
 
 function App() {
   const [coins, setCoins] = useState([]);
@@ -22,8 +22,9 @@ function App() {
     setSearch(e.target.value);
   };
 
-  const filteredCoins = coins.filter((coin) =>
-    coin.name.toLowerCase().includes(search.toLowerCase())
+  const filteredCoins = coins.filter(
+    (coin) => coin.name.toLowerCase().includes(search.toLowerCase()),
+    (coin) => coin.symbol.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -39,7 +40,7 @@ function App() {
           />
         </form>
       </div>
-      {filteredCoins.map((coin) => {
+      {filteredCoins.map((coin, symbol) => {
         return (
           <Coin
             key={coin.id}
@@ -49,6 +50,7 @@ function App() {
             current_price={coin.current_price}
             total_volume={coin.total_volume}
             priceChange={coin.price_change_percentage_24h}
+            marketcap={coin.market_cap}
           />
         );
       })}
